@@ -14,23 +14,12 @@ MARKER_TYPE_CHOICE = (
 )
 
 
-class Country(models.Model):
-    country = models.CharField(max_length=30, db_index=True)
-
-
-class City(models.Model):
-    city = models.CharField(max_length=30, db_index=True)
-    country = models.ForeignKey(Country, related_name='cities')
-
-
 class Marker(BaseTimeCreateModifyModel):
     position = models.PointField(verbose_name='Місце розташування')
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     type = models.CharField(max_length=15, choices=MARKER_TYPE_CHOICE, db_index=True, default='other')
     main_img = models.ImageField(verbose_name='Головне зображення', upload_to='markers/')
     description = models.TextField(verbose_name='Опис', max_length=1600)
-    city = models.ForeignKey(City, related_name='markers')
-    country = models.ForeignKey(Country, related_name='markers')
     address = models.CharField(max_length=255, verbose_name='Адреса')
 
     # history
@@ -39,10 +28,16 @@ class Marker(BaseTimeCreateModifyModel):
     def ratting(self):
         return self.comments.aggregate(Avg('rating'))
 
+    def __str__(self):
+        return 'ID:{} T: {}'.format(self.id, self.title[:10])
 
-class Comments(BaseTimeCreateModifyModel):
+
+class Comment(BaseTimeCreateModifyModel):
     user = models.ForeignKey('tmuser.User', related_name='comments')
     marker = models.ForeignKey(Marker, related_name='comments')
     rating = models.IntegerField(verbose_name='Рейтинг',
                                  validators=[MinValueValidator(0), MaxValueValidator(5)])
     text = models.TextField(max_length=600, verbose_name='Коментар')
+
+    def __str__(self):
+        return 'User:{} Marker: {}'.format(self.user.get_full_name(), self.marker_id)
