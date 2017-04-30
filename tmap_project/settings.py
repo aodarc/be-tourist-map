@@ -25,18 +25,23 @@ SECRET_KEY = '#srsmhxz#r9$bh9hnefo(rd6@o@1$(oirv%gy3pooa8t2#vv9m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'apps.tmuser',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    # 'rest_framework.authtoken',
+    'apps.geoapi',
+    'apps.marker',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +137,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "injoy/static"),
 # )
+
+# Auth
+AUTH_USER_MODEL = 'tmuser.User'
