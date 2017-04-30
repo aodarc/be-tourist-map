@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'rest_framework',
     'rest_framework.authtoken',
     'apps.geoapi',
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'tmap_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'tmap',
         'USER': 'tmapuser',
         'PASSWORD': '1111',
@@ -140,3 +141,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Auth
 AUTH_USER_MODEL = 'tmuser.User'
+
+
+# GIS settings
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
