@@ -2,9 +2,13 @@ from django.contrib.gis.db import models
 from django.contrib.gis.db.models import Avg
 
 # Create your models here.
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    MaxValueValidator,
+    MinValueValidator
+)
 
 from apps.core.base_models import BaseTimeCreateModifyModel
+from apps.core.utils import upload_directory_path
 
 MARKER_TYPE_CHOICE = (
     ('hotel', 'Готель'),
@@ -41,3 +45,12 @@ class Comment(BaseTimeCreateModifyModel):
 
     def __str__(self):
         return 'User:{} Marker: {}'.format(self.user.get_full_name(), self.marker_id)
+
+
+class Photo(BaseTimeCreateModifyModel):
+    image = models.ImageField(verbose_name='Зображення', upload_to=upload_directory_path)
+    owner = models.ForeignKey(to='tmuser.User', related_name='photos')
+    marker = models.ForeignKey(Marker, related_name='photos')
+
+    def __str__(self):
+        return 'Marker: {} PhotoID: {}'.format(self.marker_id, self.id)

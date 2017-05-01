@@ -13,12 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib.gis import admin
 from rest_framework.authtoken import views
 
 urlpatterns = [
     url(r'^tm/admin/', admin.site.urls),
     url(r'^api/v1/auth/', views.obtain_auth_token, name='auth-token'),
-    url(r'api/v1/', include('apps.tmuser.urls', namespace='users'))
+    url(r'api/v1/', include('apps.tmuser.urls', namespace='users')),
+    url(r'api/v1/', include('apps.geoapi.urls', namespace='geoapi'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
