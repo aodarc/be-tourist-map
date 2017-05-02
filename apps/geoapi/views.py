@@ -55,3 +55,6 @@ class SearchViewSet(viewsets.ViewSet):
 
         return Response(data={}, status=status.HTTP_200_OK)
 
+    @list_route(methods=['post'])
+    def all(self, request):
+        pass
