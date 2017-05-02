@@ -29,6 +29,7 @@ class MarkerSerializer(GeoModelSerializer):
 class PointSerializer(serializers.Serializer):
     lat = serializers.FloatField(max_value=90, min_value=-90)
     lon = serializers.FloatField(max_value=180, min_value=-180)
+    distance = serializers.IntegerField(min_value=0, default=5, required=False)
 
     def unpack_data(self):
         return self.validated_data['lat'], self.validated_data['lon']
