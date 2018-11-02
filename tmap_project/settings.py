@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'tmap_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'tmap',
-        'USER': 'tmapuser',
-        'PASSWORD': '1111',
+        'NAME': 'tix',
+        'USER': 'tix',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }

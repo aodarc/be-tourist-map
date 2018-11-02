@@ -37,8 +37,8 @@ class Marker(BaseTimeCreateModifyModel):
 
 
 class Comment(BaseTimeCreateModifyModel):
-    user = models.ForeignKey('tmuser.User', related_name='comments')
-    marker = models.ForeignKey(Marker, related_name='comments')
+    user = models.ForeignKey('tmuser.User', related_name='comments', on_delete=models.CASCADE)
+    marker = models.ForeignKey(Marker, related_name='comments', on_delete=models.CASCADE)
     rating = models.IntegerField(verbose_name='Рейтинг',
                                  validators=[MinValueValidator(0), MaxValueValidator(5)])
     text = models.TextField(max_length=600, verbose_name='Коментар')
@@ -49,8 +49,8 @@ class Comment(BaseTimeCreateModifyModel):
 
 class Photo(BaseTimeCreateModifyModel):
     image = models.ImageField(verbose_name='Зображення', upload_to=upload_directory_path)
-    owner = models.ForeignKey(to='tmuser.User', related_name='photos')
-    marker = models.ForeignKey(Marker, related_name='photos')
+    owner = models.ForeignKey(to='tmuser.User', related_name='photos', on_delete=models.CASCADE)
+    marker = models.ForeignKey(Marker, related_name='photos', on_delete=models.CASCADE)
 
     def __str__(self):
         return 'Marker: {} PhotoID: {}'.format(self.marker_id, self.id)
